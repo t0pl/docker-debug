@@ -28,6 +28,7 @@ type execOptions struct {
 	ipc          bool
 	securityOpts []string
 	capAdds      []string
+	tty          bool
 }
 
 func newExecOptions() execOptions {
@@ -65,6 +66,7 @@ func newExecCommand() *cobra.Command {
 	flags.StringArrayVarP(&options.securityOpts, "security-opts", "s", nil, "Add security options to the Docker container")
 	flags.StringArrayVarP(&options.capAdds, "cap-adds", "C", nil, "Add Linux capabilities to the Docker container")
 	flags.BoolVar(&options.ipc, "ipc", false, "share target container ipc")
+	flags.BoolVar(&options.tty, "tty", true, "attach standard streams to a tty")
 	return cmd
 }
 

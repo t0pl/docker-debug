@@ -322,7 +322,7 @@ func (cli *DebugCli) CreateContainer(attachContainer string, options execOptions
 	conf := &container.Config{
 		Entrypoint: strslice.StrSlice([]string{"/usr/bin/env", "sh"}),
 		Image:      cli.config.Image,
-		Tty:        true,
+		Tty:        options.tty,
 		OpenStdin:  true,
 		StdinOnce:  true,
 		StopSignal: "SIGKILL",
@@ -388,7 +388,7 @@ func (cli *DebugCli) ExecCreate(options execOptions, containerStr string) (types
 		User:         options.user,
 		Privileged:   options.privileged,
 		DetachKeys:   options.detachKeys,
-		Tty:          true,
+		Tty:          options.tty,
 		AttachStderr: true,
 		AttachStdin:  true,
 		AttachStdout: true,
@@ -406,7 +406,7 @@ func (cli *DebugCli) ExecCreate(options execOptions, containerStr string) (types
 func (cli *DebugCli) ExecStart(options execOptions, execID string) error {
 	h, w := cli.out.GetTtySize()
 	execConfig := container.ExecStartOptions{
-		Tty:         true,
+		Tty:         options.tty,
 		ConsoleSize: &[2]uint{h, w},
 	}
 
@@ -426,7 +426,7 @@ func (cli *DebugCli) ExecStart(options execOptions, execID string) error {
 			OutputStream: cli.out,
 			ErrorStream:  cli.err,
 			Resp:         response,
-			TTY:          true,
+			TTY:          options.tty,
 			DetachKeys:   options.detachKeys,
 		}
 		errCh <- streamer.Stream(cli.ctx)

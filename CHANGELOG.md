@@ -1,3 +1,13 @@
+### Feat
+- allow `--tty=false` to avoid mixing standard streams
+
+Useful when using things like `wireshark` that are on your host machine,
+but not on `nicolaka/netshoot` image.
+
+Example:
+```bash
+docker-debug --tty=false <container> tcpdump -s0 -w - | wireshark -k -i -
+```
 <a name="0.7.4"></a>
 ## [0.7.4] - 2022-01-20
 ### Docs
